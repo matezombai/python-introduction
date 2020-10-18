@@ -38,6 +38,8 @@ dates = pd.to_datetime(pd.read_hdf(hdf_file, "dates"))
 
 prices = pd.read_hdf(hdf_file, "prices")
 
+print(prices)
+
 
 #%%
 # ## Problem: Construct a DataFrame from rows
@@ -61,7 +63,11 @@ prices = pd.read_hdf(hdf_file, "prices")
 # ```
 
 #%%
-
+prices_row = pd.DataFrame([sep_04, sep_05, sep_06, sep_07, sep_10,
+                           sep_11, sep_12, sep_13, sep_14, sep_17,
+                           sep_18, sep_19])
+prices_row.index = dates
+print(prices_row)
 
 #%%
 # ## Problem: Construct a DataFrame from columns
@@ -76,8 +82,10 @@ prices = pd.read_hdf(hdf_file, "prices")
 # `prices` 
 
 #%%
+prices_col = pd.DataFrame([spy, aapl, goog]).T
+print(prices_col)
 
-
+print(prices-prices_row)
 #%%
 # ## Problem: Construct a DataFrame from a dictionary
 # 
@@ -88,7 +96,11 @@ prices = pd.read_hdf(hdf_file, "prices")
 # `prices` 
 
 #%%
+prices_dict = pd.DataFrame({"SPY": spy, "AAPL": aapl, "GOOG": goog})
 
+print(prices_dict)
+
+print(prices_dict-prices)
 
 #%%
 # ## Exercises
@@ -112,7 +124,8 @@ c = pd.Series([3, "C", pd.Timestamp(2018,12,31), 3.0], name="c", index=index)
 
 
 #%%
-
+ex_row = pd.DataFrame([a,b,c])
+print(ex_row)
 
 #%%
 # ### Exercise: Build a DataFrame from Columns
@@ -121,7 +134,8 @@ c = pd.Series([3, "C", pd.Timestamp(2018,12,31), 3.0], name="c", index=index)
 # 
 
 #%%
-
+ex_column = pd.DataFrame([a,b,c]).T
+print(ex_column)
 
 #%%
 

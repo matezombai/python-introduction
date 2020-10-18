@@ -29,7 +29,9 @@ print(momentum.head())
 # Select the rows in `momentum` where all returns on a day are negative.
 
 #%%
+sel = (momentum < 0).all(axis=1)
 
+print(momentum.loc[sel])
 
 #%%
 # ## Problem: Selecting rows
@@ -37,7 +39,11 @@ print(momentum.head())
 # Select the rows in `momentum` where 50% or more of the returns on a day are negative.
 
 #%%
+sel = (momentum < 0).mean(axis=1) >= 0.5
+print(momentum.loc[sel])
 
+#%%
+print(momentum.loc[(momentum < 0).mean(axis=1) >= 0.5])
 
 #%%
 # ## Problem: Selecting columns
@@ -45,13 +51,16 @@ print(momentum.head())
 # Select the columns in `momentum` what have the smallest and second smallest average returns.
 
 #%%
+mean = momentum.mean()
+mean = mean.sort_values()
+print(mean)
+
+#%%
+print(momentum.loc[:, momentum.mean() < mean.iloc[2]])
 
 
 #%%
-
-
-#%%
-
+print(momentum[mean.index[:2]])
 
 #%%
 # ## Problem: Selecting rows and columns
@@ -60,7 +69,10 @@ print(momentum.head())
 # on days where all of the returns are negative. 
 
 #%%
-
+all_neg = (momentum < 0).all(axis = 1)
+lowest_return = momentum.min().min()
+lowest_col = momentum.min() == lowest_return
+print(lowest_col)
 
 #%%
 
@@ -72,10 +84,13 @@ print(momentum.head())
 # 
 
 #%%
+sel = (momentum.mom_01 < 0) & (momentum.mom_10 < 0)
+print(momentum.loc[sel, ["mom_01", "mom_10"]].corr())
 
 
 #%%
-
+sel = (momentum.mom_01 > 0) & (momentum.mom_10 > 0)
+print(momentum.loc[sel, ["mom_01", "mom_10"]].corr())
 
 #%%
 # Setup: Reproducible random numbers
@@ -89,19 +104,19 @@ x
 # ## Problem: Select the columns of x that means >= $E[x]$
 
 #%%
-
+print(x[:, x.mean(axis=0) > 5.5])
 
 #%%
 # ## Problem: Select the rows of x that means >= $E[x]$
 
 #%%
-
+print(x[x.mean(axis=1) > 5.5, :])
 
 #%%
 # ## Problem: Select the rows and column of x where both have means < $E[x]$
 
 #%%
-
+print(x[np.ix_(x.mean(axis=1) > 5.5, x.mean(axis=0) > 5.5)])
 
 #%%
 # ## Problem: Using `where`
@@ -110,13 +125,18 @@ x
 # which elements of the portfolio return matrix are less than -2%.
 
 #%%
-
-
-#%%
-
+print(np.where(momentum.mom_05 < 0))
 
 #%%
+out = np.where(momentum < -2)
+print(out)
 
+#%%
+rows = out[0]
+cols = out[1]
+print(rows, cols)
+
+print(momentum.iloc[rows[23], cols[23]])
 
 #%%
 # ## Exercises

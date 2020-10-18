@@ -40,10 +40,11 @@ mom_10 = momentum["mom_10"]
 # In the second cell, call `describe`, a method that summarizes `Series` and `DataFrames` on `mom_01`.
 
 #%%
-
+print(mom_01.mean(), mom_01.std(), mom_01.skew(), mom_01.kurt(), mom_01.min(), 
+      mom_01.max())
 
 #%%
-
+mom_01.describe()
 
 #%%
 # ## Problem: Use NumPy and SciPy functions
@@ -52,6 +53,10 @@ mom_10 = momentum["mom_10"]
 # `skew` and `kurtosis` to produce the same output.
 
 #%%
+import numpy as np
+import scipy.stats as stats
+print(np.mean(mom_01), np.std(mom_01), np.min(mom_01), np.max(mom_01),
+      stats.skew(mom_01), stats.kurtosis(mom_01))
 
 
 #%%
@@ -69,8 +74,14 @@ mom_10 = momentum["mom_10"]
 # ```  
 
 #%%
+x = np.array([[1, 2], [2,9]])
 
+output = np.linalg.slogdet(x)
+print(output)
 
+sign, log_det = np.linalg.slogdet(x)
+print(sign)
+print(log_det)
 #%%
 
 
@@ -86,7 +97,8 @@ mom_10 = momentum["mom_10"]
 # ```  
 
 #%%
-
+linspace = np.linspace(0,1,11)
+print(linspace)
 
 #%%
 # ## Problem: Calling Functions using Keyword Arguments
@@ -107,6 +119,11 @@ mom_10 = momentum["mom_10"]
 # Compute the number of distinct combinations of 5 objects from a set of 10.
 
 #%%
+from scipy.special import comb
+
+combination = comb(10, 5)
+print(combination)
+
 
 
 #%%
@@ -114,7 +131,8 @@ mom_10 = momentum["mom_10"]
 # using the `repetition=True` keyword argument.
 
 #%%
-
+combination2 = comb(10, 5, repetition = True)
+print(combination2)
 
 #%%
 # Compute the number of combinations using the exact representation using 
@@ -122,10 +140,12 @@ mom_10 = momentum["mom_10"]
 # argument for `exact`.
 
 #%%
-
+combination3 = comb(10,5,True)
+print(combination3)
 
 #%%
-
+combination4 = comb(10,5,exact = True)
+print(combination4)
 
 #%%
 # ## Problem: Function Help
@@ -149,10 +169,10 @@ mom_10 = momentum["mom_10"]
 # **Note**: VS Code does **not** support the `?` form of help
 
 #%%
-
+help(stats.kurtosis)
 
 #%%
-
+stats.kurtosis?
 
 #%%
 # ## Problem: Use `help` with a method
@@ -160,7 +180,7 @@ mom_10 = momentum["mom_10"]
 # Use `help` to get the help for the `kurt` method attached to `momentum`.
 
 #%%
-
+help(momentum.kurt)
 
 #%%
 # ## Exercises
@@ -170,7 +190,7 @@ mom_10 = momentum["mom_10"]
 # Use the `info` method on `momentum` to get information about this `DataFrame`.
 
 #%%
-
+momentum.info()
 
 #%%
 # ### Exercise: Compute the day-by-day mean
@@ -180,6 +200,11 @@ mom_10 = momentum["mom_10"]
 # the first 5 rows and last 5 rows 
 
 #%%
+mean_ret = momentum.mean(axis = 0)
+
+print(mean_ret.head(5))
+
+print(mean_ret.tail(5))
 
 
 #%%
@@ -191,7 +216,13 @@ mom_10 = momentum["mom_10"]
 # Compute the standard deviation of the mean returns by chaining methods.
 
 #%%
+mean_ret_std = mean_ret.std()
 
+print(mean_ret_std)
+
+std2 = momentum.mean(axis = 0).std()
+
+print(std2)
 
 #%%
 # ### Exercise: Compute the average standard deviation
@@ -203,4 +234,6 @@ mom_10 = momentum["mom_10"]
 # where $V[r_i]$ is the variance of portfolio $i$.
 
 #%%
+mean_std = momentum.std(axis = 0).mean()
 
+print(mean_std)

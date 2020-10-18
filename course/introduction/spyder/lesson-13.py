@@ -25,7 +25,13 @@
 # 
 
 #%%
+total = 0
+n = 100
 
+for i in range(1,n+1):
+    total = total+i
+    
+print(total)
 
 #%%
 # ## Problem: Compute a compound return
@@ -36,7 +42,16 @@
 # 
 
 #%%
+import numpy as np
 
+cr = np.ones(10)
+r = 0.08    # 8%
+cum_ret = 1
+for i in range(10):
+    cum_ret *= (1+r)
+    cr[i] = cum_ret
+    
+print(cr)
 
 #%%
 # ## Problem: Simulate a random walk
@@ -60,10 +75,21 @@
 # 
 
 #%%
+e = np.random.standard_normal(100)
+y = np.zeros(100)
+y[0] = e[0]
 
+for i in range(1, 100):
+    y[i] = y[i-1] + e[i]
+    
 
 #%%
+%matplotlib inline
 
+import matplotlib.pyplot as plt
+plt.rc('figure', figsize=(16,6))
+
+plt.plot(y)
 
 #%%
 # ## Problem: Nested Loops
@@ -89,13 +115,22 @@ momentum = momentum / 100  # Convert to numeric values from percentages
 
 
 #%%
+nobs = momentum.shape[0]
+ncol = momentum.shape[1]
 
+std_dev = momentum.copy()
+std_dev.loc[:,:] = np.nan
+
+for i in range(ncol):
+    for t in range(22, nobs):
+        std_dev.iloc[t, i] = momentum.iloc[t-22:t, i].std()
 
 #%%
-
+std_dev.plot()
 
 #%%
-
+rolling_std_dev = momentum.rolling(22).std()
+rolling_std_dev.plot()
 
 #%%
 # ## Exercises

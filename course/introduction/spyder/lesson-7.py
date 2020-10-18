@@ -23,12 +23,23 @@
 # The text in the triple quotes is the docstring which is optional.
 
 #%%
+import numpy as np
+
+def normal_likelihood(x, mu, sigma2):
+    a = np.sqrt(2 * np.pi * sigma2)
+    b = (x - mu) ** 2
+    c = 2 * sigma2
+    lik = 1 / a * np.exp(-b / c)
+    return lik
 
 
 #%%
-
+normal_likelihood(0, 0 , 1.0)
 
 #%%
+from scipy import stats
+
+print(stats.norm.pdf(0, 0, 1))
 
 
 #%%

@@ -16,7 +16,11 @@
 # from [FRED](https://fred.stlouisfed.org/).
 
 #%%
+import pandas as pd
 
+gs10_csv = pd.read_csv("data/GS10.csv", index_col="DATE", parse_dates = True)
+print(gs10_csv.head())
+print(gs10_csv.index)
 
 #%%
 # ## Problem: Converting Dates
@@ -26,7 +30,25 @@
 #    index. 
 
 #%%
+gs10_excel = pd.read_excel("data/GS10.xls", skiprows=10, 
+                           index_col="observation_date")
+print(gs10_excel.head())
+print(gs10_excel.index)
 
+#%%
+gs10_raw = pd.read_csv("data/GS10.csv")
+dates = gs10_raw.DATE
+dates = pd.to_datetime(dates)
+gs10_raw.index = dates
+del gs10_raw["DATE"]
+print(gs10_raw.head())
+
+#%%
+gs10_raw = pd.read_csv("data/GS10.csv")
+dates = gs10_raw.pop("DATE")
+dates = pd.to_datetime(dates)
+gs10_raw.index = dates
+print(gs10_raw.head())
 
 #%%
 # ## Exercises

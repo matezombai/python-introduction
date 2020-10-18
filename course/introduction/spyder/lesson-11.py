@@ -21,13 +21,17 @@
 # 
 
 #%%
-
+import numpy as np
+x = np.arange(25).reshape((5,5))
+print(x)
 
 #%%
-
+y = np.arange(5)
+print(y)
 
 #%%
-
+z = np.arange(5).reshape((5,1))
+print(z)
 
 #%%
 # ## Zero-based indexing
@@ -42,13 +46,14 @@
 # **Question**:  Which index is rows and which index is columns?
 
 #%%
+print(x[0, 2])
 
 
 #%%
-
+print(y[2])
 
 #%%
-
+print(z[2, 0])
 
 #%%
 # ## Problem: Scalar selection of a single row
@@ -58,16 +63,16 @@
 # **Question**: What is the dimension of `x` and the second row of `x`
 
 #%%
-
-
-#%%
-
+print(x[1])
 
 #%%
-
+print(x[1].shape)
 
 #%%
+print(z[1])
 
+#%%
+print(z[1].shape)
 
 #%%
 # ## Problem: Slice selection of a single row
@@ -77,14 +82,17 @@
 # **Question**: What are the dimension selections?
 
 #%%
+print(x[1:2])
 
+#%%
+print(x[1:2].shape)
+
+#%%
+print(y[1:2].shape)
 
 #%%
 
-
-#%%
-
-
+print(z[1:2])
 #%%
 # ## Problem: List selection of a single row
 # 
@@ -93,13 +101,13 @@
 # **Question**: What are the dimension selections?
 
 #%%
-
-
-#%%
-
+print(x[[1]])
 
 #%%
+print(x[[1]].shape)
 
+#%%
+print(z[[1]])
 
 #%%
 # ## Problem: Selecting a single Column
@@ -108,17 +116,30 @@
 # **Question**: What the the dimensions of the selected elements?
 
 #%%
+print(x[:, 1])
+
+#%%
+print(x[:, 1].shape)
 
 
 #%%
 
+print(x[:, 1:2])
+
+#%%
+
+print(x[:, [1]])
 
 #%%
 # ## Problem: Selecting a block of specific columns
 # Select the 2nd and 3rd columns of x using a slice.
 
 #%%
+print(x[:, 1:3])
 
+#%%
+
+print(x[:, [1,2]])
 
 #%%
 # ## Problem: Selecting a block of specific rows
@@ -127,26 +148,41 @@
 
 #%%
 
+print(x[1:4:2])
+
+#%%
+
+print(x[[1, 3]])
 
 #%%
 # ## Problem: Selecting a block of specific rows and columns
 # Combine these be combined to select the 2nd and 3rd columns and 2nd and 4th rows.
 
 #%%
+print(x[1:4:2, 1:3])
 
+#%%
+print(x[1:4:2, [1, 2]])
+
+#%%
+print(x[[1, 3], 1:3])
 
 #%%
 
+print(x[[1,3], [1,2]])
 
 #%%
 # ## Problem: Use `ix_` to select rows and columns using lists
 # Use `ix_` to select the 2nd and 4th rows and 1st and 3rd columns of `x`.
 
 #%%
-
+print(x[np.ix_([1,3], [1,2])])
 
 #%%
+print(np.ix_([1,3], [1,2]))
 
+#%%
+print(x[[[1,1],[3,3]], [[1,2], [1,2]]])
 
 #%%
 # ## Problem: Convert a DataFrame to a NumPy array
@@ -166,6 +202,9 @@ print(x_df)
 
 #%%
 
+x_df.to_numpy()
+
+print(x_df)
 
 #%%
 # ## Problem: Use `np.asarray` to convert to an array
@@ -173,7 +212,9 @@ print(x_df)
 # Use  `np.asarray` to convert a DataFrame to a NumPy array.
 
 #%%
+np.asarray(x_df)
 
+print(x_df)
 
 #%%
 # ## Exercises

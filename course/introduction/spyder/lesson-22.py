@@ -25,7 +25,9 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # stored as "IBM" in the HDF file, and MSFT is stored as "MSFT.
 
 #%%
-
+import pandas as pd
+ibm = pd.read_hdf("data/hf.h5", "IBM")
+msft = pd.read_hdf("data/hf.h5", "MSFT")
 
 #%%
 # ## Problem: Histogram
@@ -34,6 +36,9 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # the 1-minute Microsoft returns first using `resample` and `pct_change`).
 
 #%%
+rets = msft.resample("60S").last().pct_change().dropna()
+ax = rets.plot.hist(bins = 21)
+ax.set_title("1-minute MSFT returns (%)")
 
 
 #%%
@@ -45,6 +50,23 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # and then plot using the combined DataFrame. 
 
 #%%
+import matplotlib.pyplot as plt
+plt.rc("figure", figsize=(12,8))
+import seaborn as sns
+sns.set_style("darkgrid")
+
+msft_rets = msft.resample("300S").last().pct_change().dropna()
+ibm_rets = ibm.resample("300S").last().pct_change().dropna()
+
+combined = pd.DataFrame({"MSFT": msft_rets, "IBM": ibm_rets})
+combined = combined.dropna()
+combined.head()
+
+ax = combined.plot.scatter(x="MSFT", y="IBM", marker="x", s=64)
+
+bound = combined.abs().max().max()
+ax.set_xlim(-1.1*bound, 1.1*bound)
+ax.set_ylim(-1.1*bound, 1.1*bound)
 
 
 #%%
@@ -53,7 +75,9 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # Save the previous plot to PNG and PDF.
 
 #%%
-
+fig = ax.get_figure()
+fig.savefig("scatter.pdf")
+fig.savefig("scatter.png", dpi=300, transparent=True)
 
 #%%
 # ## Exercises

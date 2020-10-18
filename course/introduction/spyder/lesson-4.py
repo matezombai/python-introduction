@@ -50,7 +50,21 @@
 # Using the ticker names as the `index` of each series
 
 #%%
-
+import pandas as pd
+tickers = ["SPY", "AAPL", "GOOG"]
+sep_04 = pd.Series([289.81, 228.36, 1197.00], index = tickers)
+sep_05 = pd.Series([289.03, 226.87, 1186.48], index = tickers)
+sep_06 = pd.Series([288.16, 223.10, 1171.44], index = tickers)
+sep_07 = pd.Series([287.60, 221.30, 1164.83], index = tickers)
+sep_10 = pd.Series([288.10, 218.33, 1164.64], index = tickers)
+sep_11 = pd.Series([289.05, 223.85, 1177.36], index = tickers)
+sep_12 = pd.Series([289.12, 221.07, 1162.82], index = tickers)
+sep_13 = pd.Series([290.83, 226.41, 1175.33], index = tickers)
+sep_14 = pd.Series([290.88, 223.84, 1172.53], index = tickers)
+sep_17 = pd.Series([289.34, 217.88, 1156.05], index = tickers)
+sep_18 = pd.Series([290.91, 218.24, 1161.22], index = tickers)
+sep_19 = pd.Series([291.44, 216.64, 1158.78], index = tickers)
+print(sep_05)
 
 #%%
 # ## Problem: Create a Vector of Dates
@@ -72,9 +86,16 @@
 # ```
 # 
 # Create a vector containing all of the dates in the table.
-
+"
 #%%
+dates = ["2018-09-04", "2018-09-05", "2018-09-06", "2018-09-07",
+         "2018-09-10", "2018-09-11", "2018-09-12", "2018-09-13",
+         "2018-09-14", "2018-09-17", "2018-09-18", "2018-09-19"]
+print(dates)
 
+dates = pd.to_datetime(dates)
+
+print(dates)
 
 #%%
 # ## Problem: Input a Series with Dates
@@ -93,6 +114,16 @@
 
 #%%
 
+goog = pd.Series([1197.00, 1186.48, 1171.44, 1164.83, 1164.64, 1177.36,
+                  1162.82, 1175.33, 1172.53, 1156.05, 1161.22, 1158.78],
+                  index = dates, name = "GOOG")
+aapl = pd.Series([228.36, 226.87, 223.10, 221.30, 218.33, 223.85,
+                  221.07, 226.41, 223.84, 217.88, 218.24, 216.64],
+                  index = dates, name = "AAPl")
+spy = pd.Series([289.80, 289.03, 288.16, 287.60, 288.10, 289.05,
+                 289.12, 290.83, 290.88, 289.34, 290.91, 291.44],
+                  index = dates, name = "SPY")
+print(goog, spy, aapl)
 
 #%%
 # ## Problem: Create a DataFrame
@@ -106,8 +137,21 @@
 # ```
 
 #%%
-
-
+prices = pd.DataFrame([[289.81, 228.36, 1197.00], 
+                       [289.03, 226.87, 1186.48], 
+                       [288.16, 223.10, 1171.44], 
+                       [287.60, 221.30, 1164.83], 
+                       [288.10, 218.33, 1164.64], 
+                       [289.05, 223.85, 1177.36], 
+                       [289.12, 221.07, 1162.82], 
+                       [290.83, 226.41, 1175.33], 
+                       [290.88, 223.84, 1172.53], 
+                       [289.34, 217.88, 1156.05], 
+                       [290.91, 218.24, 1161.22], 
+                       [291.44, 216.64, 1158.78]], 
+                       columns = ["SPY", "AAPL", "GOOG"], 
+                       index = dates)
+print(prices)
 #%%
 # Save the price data
 # 
@@ -148,4 +192,10 @@ if "prices" in globals():
 # | D     | Dannon       | -342.1    |
 
 #%%
+colnames = ["Firm", "Profit"]
+rownames = ["A", "B", "C", "D"]
 
+df1 = pd.DataFrame([["Alcoa", 3.428], ["Berkshire", 67.421],
+                    ["Coca Cola", 197.400], ["Dannon", -342.100]],
+                    columns = colnames, index = rownames)
+print(df1)

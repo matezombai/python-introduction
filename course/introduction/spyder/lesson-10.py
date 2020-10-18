@@ -24,6 +24,25 @@
 # * `y_named`: A `Series` containing `y` that has the index `"r0"`, `"r1"`, ..., `"r4"`
 
 #%%
+import numpy as np
+import pandas as pd
+
+x = np.arange(25).reshape((5,5))
+y = np.arange(5)
+
+x_df = pd.DataFrame(x)
+x_named = pd.DataFrame(x, columns = ["c0", "c1", "c2", "c3", "c4"],
+                       index = ["r0", "r1", "r2", "r3", "r4"])
+
+y_s = pd.Series(y)
+y_named = pd.Series(y, index = x_named.index)
+
+print(f"x_df = {x_df}")
+print(f"x_named = {x_named}")
+
+print()
+print(f"y_s = {y_s}")
+print(f"y_named = {y_named}")
 
 
 #%%
@@ -33,6 +52,7 @@
 # 
 
 #%%
+print(x_named.loc["r1"])
 
 
 #%%
@@ -41,13 +61,13 @@
 # Select the 2nd columns of `x_name` using  both `[]` and `.loc`.
 
 #%%
-
-
-#%%
-
+print(x_named.loc[:, "c1"])
 
 #%%
+print(x_named["c1"])
 
+#%%
+print(x_named.c1)
 
 #%%
 # ## Problem: Selecting a elements of a Series by name
@@ -56,13 +76,13 @@
 # 
 
 #%%
-
-
-#%%
-
+print(y_named["r1"])
 
 #%%
+print(y_named.loc["r1"])
 
+#%%
+print(y_named.r1)
 
 #%%
 # ## Problem: Selecting rows and columns by name
@@ -70,13 +90,13 @@
 # Select the 2nd and 4th rows and 1st and 3rd columns of `x_name`.
 
 #%%
-
-
-#%%
-
+print(x_named.loc[["r1", "r3"], ["c0", "c2"]])
 
 #%%
+print(x_named[["c0", "c2"]].loc[["r1", "r3"]])
 
+#%%
+print(x_named.loc[["r1", "r3"]][["c0", "c2"]])
 
 #%%
 # ## Problem: DataFrame selection with default index and column names
@@ -85,7 +105,7 @@
 # 
 
 #%%
-
+print(x_df.loc[[1, 3], [0, 2]])
 
 #%%
 # ## Problem: Series selection with the default index
@@ -93,20 +113,23 @@
 # Select the final element in `y_s`
 
 #%%
-
+print(y_s[4])
 
 #%%
-
+print(y_s.loc[4])
 
 #%%
 # ## Problem: Subseries selection
 # Select the subseries of `y_named` and `y_s` containing the first, fourth and fifth element.
 
 #%%
-
+print(y_named[["r0", "r3", "r4"]])
 
 #%%
+print(y_named.loc[["r0", "r3", "r4"]])
 
+#%%
+print(y_s.loc[[0, 3, 4]])
 
 #%%
 # Load the data in momentum.csv.
@@ -127,7 +150,7 @@ momentum.head()
 # 
 
 #%%
-
+print(momentum.loc["2016-02-16"])
 
 #%%
 # ## Problem: Selecting data in a single month
@@ -135,7 +158,7 @@ momentum.head()
 # Select return in March 2016.
 
 #%%
-
+print(momentum.loc["2016-03"])
 
 #%%
 # ## Problem: Selecting data in a single year
@@ -144,7 +167,8 @@ momentum.head()
 # 
 
 #%%
-
+print(momentum.loc["2016"])
+print(momentum["2016"])
 
 #%%
 # ## Problem: Selecting data in a date range
@@ -152,7 +176,7 @@ momentum.head()
 # Select returns between May 1, 2016, and June 15, 2016.
 
 #%%
-
+print(momentum.loc["2016-05-01":"2016-06-15"])
 
 #%%
 # ## Exercises

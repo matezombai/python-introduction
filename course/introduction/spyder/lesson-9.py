@@ -30,7 +30,12 @@ goog_returns = returns.GOOG
 # **Note**: You need to use the `axis` keyword for the sum.
 
 #%%
+import numpy as np
 
+w = np.ones(3) / 3
+weighted_rets = returns * w
+port_ret = weighted_rets.sum(axis = 1)
+print(port_ret)
 
 #%%
 # ## Problem: Compute the Mean and Standard Deviation
@@ -49,20 +54,25 @@ goog_returns = returns.GOOG
 # 
 
 #%%
+spy_mean = spy_returns.mean()
+aapl_mean = aapl_returns.mean()
+goog_mean = goog_returns.mean()
+
+print(spy_mean, aapl_mean, goog_mean)
+
+#%%
+print(returns.mean())
 
 
 #%%
-
-
-#%%
-
+print(returns.std())
 
 #%%
 # ## Problem: Compute Correlation
 # Compute the correlation of the matrix of returns (`corr()`). 
 
 #%%
-
+print(returns.corr())
 
 #%%
 # ## Problem: Summing all elements
@@ -71,20 +81,22 @@ goog_returns = returns.GOOG
 # in the previous step? 
 
 #%%
-
+print(returns.sum())
 
 #%%
-
+print(returns.shape)
+nobs = returns.shape[0]
+print(returns.mean() * nobs)
 
 #%%
 # ## Problem: Maximum and Minimum Values
 # Compute the minimum and maximum values of the columns of returns using the `min()` and `max()` commands. 
 
 #%%
-
+print(returns.min())
 
 #%%
-
+print(returns.max())
 
 #%%
 # ## Problem: Rounding Up, Down and to the Closest Integer
@@ -98,13 +110,15 @@ goog_returns = returns.GOOG
 # Use `ceil` and `floor` to round up and down, respectively.
 
 #%%
-
-
-#%%
-
+print((100 * returns).round())
 
 #%%
+ceiled = np.ceil(100*returns)
+print(ceiled)
 
+#%%
+floored = np.floor(100*returns)
+print(floored)
 
 #%%
 # ## Exercises

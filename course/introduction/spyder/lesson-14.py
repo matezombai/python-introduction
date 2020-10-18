@@ -29,10 +29,14 @@ rs = np.random.RandomState(20000101)
 # Check whether each of these are above their expected value.
 
 #%%
-
+x = rs.random_sample()
+y = rs.standard_normal()
+z = rs.randint(1, 11)
 
 #%%
-
+print(f"x is above E[X]: {x > 0.5}")
+print(f"y is above E[Y]: {y > 0.0}")
+print(f"z is above E[Z]: {z > 5.5}")
 
 #%%
 # ## Problem: Using comparison operators
@@ -42,6 +46,9 @@ rs = np.random.RandomState(20000101)
 # 3. Check if `z` is greater than or equal to 9
 
 #%%
+print(z == 7)
+print(z != 5)
+print(z >= 9)
 
 
 #%%
@@ -52,7 +59,14 @@ rs = np.random.RandomState(20000101)
 # 3. Rewrite 2 using `not` and your result from 1.
 
 #%%
+print(z >= 2)
+print(z < 8)
 
+print((z >= 2) and (z<8))
+
+print((z<2) or (z>=8))
+
+print(not (z >= 2) and (z<8))
 
 #%%
 # ## Exercises

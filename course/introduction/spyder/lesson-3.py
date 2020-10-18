@@ -31,6 +31,17 @@
 
 #%%
 
+import numpy
+import pandas
+import scipy
+import scipy.stats
+import matplotlib.pyplot
+import statsmodels.api
+import statsmodels.tsa.api
+
+numpy.array([1,2,3])
+
+
 
 #%%
 # ## Problem: Canonical Names
@@ -51,6 +62,13 @@
 
 #%%
 
+import numpy as np
+import pandas as pd
+import scipy as sp
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+import statsmodels.tsa.api as tsa
 
 #%%
 # ## Problem: Importing individual functions
@@ -60,7 +78,9 @@
 # 3. Import the `stats` module from `scipy`
 
 #%%
-
+from numpy import array, sqrt, log, exp
+from statsmodels.regression.linear_model import OLS
+from scipy import stats
 
 #%%
 # ## Exercises
@@ -85,7 +105,8 @@ print(x)
 
 
 #%%
-
+determinant = np.linalg.det(x)
+print(determinant)
 
 #%%
 

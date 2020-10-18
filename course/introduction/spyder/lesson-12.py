@@ -22,19 +22,32 @@
 # * A 5-element Series `y_named` with index "r0", "r1", ..., "r4". 
 
 #%%
+import numpy as np
+import pandas as pd
 
+x = np.arange(25).reshape((5,5))
+x_df = pd.DataFrame(x)
+x_named = pd.DataFrame(x, columns=["c0", "c1", "c2", "c3", "c4"],
+                       index=["r0", "r1", "r2", "r3", "r4"])
 
+y = np.arange(5)
+y_s = pd.Series(y)
+y_named = pd.Series(y, index=x_named.index)
 #%%
 # ## Problem: Picking an Element out of a DataFrame
 # 
 # Using double index notation, select the (0,2) and the (2,0) element of
 # `x_named`.
 
-#%%
-
 
 #%%
+print(x_named.iloc[0,2])
 
+#%%
+print(x_named.iloc[2,0])
+
+#%%
+print(x_named)
 
 #%%
 # ## Problem: Select Elements from Series
@@ -42,7 +55,7 @@
 # Select the 2nd element of `y_named`.
 
 #%%
-
+print(y_named.iloc[1])
 
 #%%
 # ## Problem: Selecting Rows as Series
@@ -51,7 +64,7 @@
 # 
 
 #%%
-
+print(x_named.iloc[1])
 
 #%%
 # ## Problem: Selecting Rows as DataFrames
@@ -62,17 +75,17 @@
 # 
 
 #%%
-
+print(x_named.iloc[[1]])
 
 #%%
-
+print(x_named.iloc[1:2])
 
 #%%
 # ## Problem: Selecting Entire Columns as Series
 # Select the 2nd column of `x_named` using the colon (:) operator. 
 
 #%%
-
+print(x_named.iloc[:,1])
 
 #%%
 # ## Problem: Selecting Single Columns as DataFrames
@@ -80,17 +93,17 @@
 # 
 
 #%%
-
+print(x_named.iloc[:, [1]])
 
 #%%
-
+print(x_named.iloc[:, 1:2])
 
 #%%
 # ## Problem: Selecting Specific Columns
 # Select the 2nd and 3rd columns of `x_named` using a slice.
 
 #%%
-
+print(x_named.iloc[:,1:3])
 
 #%%
 # ## Problem: Select Specific Rows
@@ -99,10 +112,10 @@
 # selection using a list of integers.
 
 #%%
-
+print(x_named.iloc[1:4:2])
 
 #%%
-
+print(x_named.iloc[[1, 3]])
 
 #%%
 # ## Problem: Select arbitrary rows and columns
@@ -114,13 +127,13 @@
 # row/column selection using `DataFrame.iloc` is simpler but less flexible.
 
 #%%
-
-
-#%%
-
+x_named.iloc[[1,3], [1,2]]
 
 #%%
+x_named.iloc[1:4:2, 1:3]
 
+#%%
+print(x_named.iloc[[1,3], 1:3])
 
 #%%
 # ## Problem: Mixed selection
@@ -128,7 +141,7 @@
 # Select the columns c1 and c2 and the 1st, 3rd and 5th row.
 
 #%%
-
+print(x_named.loc[:, ["c1", "c2"]].iloc[[0,2,4]])
 
 #%%
 # ## Problem: Mixed selection 2
@@ -136,7 +149,7 @@
 # Select the rows r1 and r2 and the 1st, 3rd and final column.
 
 #%%
-
+print(x_named.iloc[:, [0,2,4]].loc[["r1", "r2"]])
 
 #%%
 # ## Exercises

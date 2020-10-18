@@ -37,13 +37,20 @@ goog = pd.read_hdf("data/dataframes.h5", "goog")
 # ```
 
 #%%
+returns = prices.pct_change()
+print(returns.head())
+
+#%%
+returns = returns.dropna()
+print(returns.head())
 
 
 #%%
+spy_returns = returns["SPY"]
+aapl_returns = returns["AAPL"]
+goog_returns = returns.GOOG
 
-
-#%%
-
+print(spy_returns, aapl_returns, goog_returns)
 
 #%%
 # ## Problem: Compute Log Returns
@@ -58,7 +65,13 @@ goog = pd.read_hdf("data/dataframes.h5", "goog")
 # $r_{t}=\ln\left(P_{t}\right)-\ln\left(P_{t-1}\right)=\ln\left(\frac{P_{t}}{P_{t-1}}\right)\approx\frac{P_{t}}{P_{t-1}}-1$.
 
 #%%
+import numpy as np
 
+log_prices = np.log(prices)
+print(log_prices.head())
+
+log_returns = log_prices.diff().dropna()
+print(log_returns)
 
 #%%
 # ## Basic Mathematical Operations
@@ -86,19 +99,22 @@ goog = pd.read_hdf("data/dataframes.h5", "goog")
 # 4. Extract the fractional return using floor division and modulus
 
 #%%
-
-
-#%%
-
+print(1 + returns)
 
 #%%
-
-
-#%%
-
+print(returns ** 2)
 
 #%%
+print(2 * prices.GOOG)
 
+prices["GOOG"] = 2 * prices["GOOG"]
+print(prices.head())
+
+#%%
+print(returns % 1)
+
+#%%
+print(returns - returns // 1)
 
 #%%
 # ## Problem: Addition of Series
@@ -106,7 +122,7 @@ goog = pd.read_hdf("data/dataframes.h5", "goog")
 # 
 
 #%%
-
+print(returns.SPY + returns.AAPL)
 
 #%%
 # ## Problem: Combining methods and mathematical operations
@@ -114,6 +130,20 @@ goog = pd.read_hdf("data/dataframes.h5", "goog")
 # correlation between the returns on AAPL and SPY. 
 
 #%%
+nobs = aapl_returns.shape[0]
+
+a = aapl_returns - aapl_returns.mean()
+s = spy_returns - spy_returns.mean()
+
+aapl_var = a.dot(a) / (nobs - 1)
+spy_var = s.dot(s) / (nobs - 1)
+aapl_spy_cov = a.dot(s) / (nobs - 1)
+
+corr = aapl_spy_cov / np.sqrt(aapl_var * spy_var)
+
+print(aapl_var, spy_var, aapl_spy_cov, corr)
+
+print(f"The correlation between SPY and AAPL is {corr}")
 
 
 #%%
@@ -122,7 +152,8 @@ goog = pd.read_hdf("data/dataframes.h5", "goog")
 # and add it to the return `DataFrame`  
 
 #%%
-
+spy_returns_df = pd.DataFrame({"SPY": spy_returns})
+print(spy_returns_df + returns)
 
 #%%
 # ## Problem: Non-conformable math
@@ -130,7 +161,7 @@ goog = pd.read_hdf("data/dataframes.h5", "goog")
 # Add the prices in `sep_04` to the prices of `goog`. What happens? 
 
 #%%
-
+print(sep_04 + prices.GOOG)
 
 #%%
 # ## Problem: Constructing portfolio returns
@@ -142,7 +173,12 @@ goog = pd.read_hdf("data/dataframes.h5", "goog")
 # 
 
 #%%
+import numpy as np
+w = np.array([[1/3, 1/3, 1/3]]).T
+print(returns.shape, w.shape)
 
+port_ret = returns @ w
+print(port_ret)
 
 #%%
 # ## Exercises

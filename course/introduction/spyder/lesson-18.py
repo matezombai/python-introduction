@@ -33,7 +33,21 @@ print(momentum.head())
 #  
 
 #%%
+import numpy as np
 
+e = np.random.standard_normal(100)
+y = np.zeros(100)
+
+y[0] = e[0]
+
+for i in range(1, 100):
+    y[i] = y[i-1]
+    if e[i] < 0:
+        y[i] += 2 * e[i]
+    else:
+        y[i] += e[i]
+
+z = np.cumsum(e)
 
 #%%
 # Plot the two random walks using the code.  We will cover data visualization
@@ -49,6 +63,11 @@ print(momentum.head())
 
 #%%
 
+%matplotlib inline
+import matplotlib.pyplot as plt
+plt.plot(y)
+plt.plot(z)
+plt.legend(["y", "z"])
 
 #%%
 # ## Problem: Simulate the asymmetric random walk without an `if`-`then`
@@ -57,7 +76,12 @@ print(momentum.head())
 # an `if`-`then` statement. 
 
 #%%
+y = np.zeros(100)
+y[0] = e[0]
+for i in range(1, 100):
+    y[i] = y[i-1] + e[i] + e[i] * (e[i] < 0)
 
+z = np.cumsum(e)
 
 #%%
 # Setup: Plot the data
@@ -84,7 +108,20 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # 2. How many distinct runs lasted 5 or more days?
 
 #%%
+n = len(mom_01)
+run = np.zeros(n)
+run[0] = 1
+for i in range(1, n):
+    if np.sign(mom_01[i]) == np.sign(mom_01[i-1]):
+        run[i] = run[i-1] + 1
+    else:
+        run[i] = 1
+        
+max_run = run.max()
+print(f"The maximum run was {max_run}")
 
+#%%
+print(np.where(run == max_run))
 
 #%%
 # Plot the runs using 
@@ -97,7 +134,9 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # ```
 
 #%%
-
+%matplotlib inline
+import matplotlib.pyplot as plt
+plt.plot(run)
 
 #%%
 # ## Exercises

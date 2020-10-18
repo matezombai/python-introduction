@@ -27,7 +27,11 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # stored as "IBM" in the HDF file, and MSFT is stored as "MSFT.
 
 #%%
+import pandas as pd
+ibm = pd.read_hdf("data/hf.h5", "IBM")
+msft = pd.read_hdf("data/hf.h5", "MSFT")
 
+print(msft.head())
 
 #%%
 # ## Problem: Basic Plotting
@@ -37,13 +41,20 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # 3. Add markers and remove the line. 
 
 #%%
-
-
-#%%
-
+ax = ibm.plot()
+ax
 
 #%%
+ax = ibm.plot()
+ax.set_title("IBM Price")
+ax.set_xlabel("Time")
+ax.set_ylabel("Price")
 
+#%%
+ax = ibm.plot(linestyle="none", marker="v")
+ax.set_title("IBM Price")
+ax.set_xlabel("Time")
+ax.set_ylabel("Price")
 
 #%%
 # ## Problem: Subplot
@@ -52,7 +63,14 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # price of MSFT in the bottom subplot. 
 
 #%%
+import matplotlib.pyplot as plt
+plt.rc("figure", figsize=(12,8))
+import seaborn
+seaborn.set_style("darkgrid")
 
+fig, axes = plt.subplots(2,1)
+ibm.plot(ax=axes[0], linewidth=3)
+msft.plot(ax=axes[1], color="orange", linestyle="-.")
 
 #%%
 # ## Problem: Plot with Dates
@@ -61,7 +79,9 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # repeat of a previous plot but shows how to use the `plot` command directly. 
 
 #%%
-
+plt.plot(ibm.index, ibm.values)
+ax = plt.gca()
+ax.set_xlim(ibm.index[0], ibm.index[-1])
 
 #%%
 # ## Exercises

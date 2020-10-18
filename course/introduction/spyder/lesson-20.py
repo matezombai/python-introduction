@@ -26,7 +26,7 @@ gs10_excel = pd.read_excel("data/GS10.xls", skiprows=10,
 # 
 
 #%%
-
+gs10_csv.to_excel("gs10-exported.xlsx")
 
 #%%
 # ## Problem: Export to CSV
@@ -34,7 +34,7 @@ gs10_excel = pd.read_excel("data/GS10.xls", skiprows=10,
 # Export `gs10_excel` to CSV. 
 
 #%%
-
+gs10_excel.to_csv("gs10-exported.csv")
 
 #%%
 # ## Problem: Export to HDF
@@ -42,7 +42,10 @@ gs10_excel = pd.read_excel("data/GS10.xls", skiprows=10,
 # Export both to a single HDF file (the closest thing to a "native" format in pandas).
 
 #%%
+gs10_excel.to_hdf("combined.h5", "excel")
 
+#%%
+gs10_csv.to_hdf("combined.h5", "csv", mode="a")
 
 #%%
 # ## Problem: Import from HDF 
@@ -50,10 +53,14 @@ gs10_excel = pd.read_excel("data/GS10.xls", skiprows=10,
 # Import the data saved as HDF and verify it is the same as the original data.
 
 #%%
+reread_excel = pd.read_hdf("combined.h5", "excel")
+reread_csv = pd.read_hdf("combined.h5", "csv")
 
+print(reread_excel.head())
 
 #%%
-
+print(reread_csv.head())
+print(gs10_csv.head())
 
 #%%
 # ## Exercises

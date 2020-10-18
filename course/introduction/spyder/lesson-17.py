@@ -15,7 +15,12 @@
 # **Note**: Rerun the cell a few time to see different output.
 
 #%%
+import numpy as np
 
+value = np.random.standard_normal()
+
+if value < 0:
+    print(value)
 
 #%%
 # ## Problem: Print different messages based on value
@@ -24,7 +29,12 @@
 # and "Negative" if not.
 
 #%%
+value = np.random.standard_normal()
 
+if value > 0:
+    print("Positive")
+else:
+    print("Negative")
 
 #%%
 # ## Problem: 
@@ -34,7 +44,15 @@
 # "Positive Outlier" if larger than 2, and "Inlier" if between -2 and 2.
 
 #%%
+value = np.random.standard_t(2)
 
+print(value)
+if value < -2:
+    print("Negative Outlier")
+elif value > 2:
+    print("Positive Outlier")
+else:
+    print("Inlier")
 
 #%%
 # ## Exercises

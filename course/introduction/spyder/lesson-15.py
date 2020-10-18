@@ -33,7 +33,12 @@ mom_05 = momentum["mom_05"]
 # For portfolios 1 and 10, determine whether each return is $<0$ (separately).
 
 #%%
+mom_01_neg = mom_01 < 0
+print(mom_01_neg.head(20))
 
+#%%
+mom_10_neg = mom_10 < 0
+print(mom_10_neg.head(20))
 
 #%%
 # ## Problem: Combining boolean arrays
@@ -43,10 +48,27 @@ mom_05 = momentum["mom_05"]
 # standard deviations. 
 
 #%%
-
+both = mom_01_neg & mom_10_neg
+print(both.head(20))
 
 #%%
+both = mom_01_neg & mom_10_neg
+print(both.sum())
 
+#%%
+print(((mom_01 < 0) & (mom_10 < 0)).sum())
+
+#%%
+import numpy as np
+
+print(np.logical_and(mom_10_neg, mom_01_neg).sum())
+
+#%%
+mom_01_large = mom_01.abs() > (2 * mom_01.std())
+mom_10_large = mom_10.abs() > (2 * mom_10.std())
+
+both_large = mom_01_large & mom_10_large
+print(both_large.sum())
 
 #%%
 # ## Problem: Combining boolean arrays
@@ -54,7 +76,10 @@ mom_05 = momentum["mom_05"]
 # 
 
 #%%
+print((mom_01_neg | mom_10_neg).sum())
 
+#%%
+print(np.logical_or(mom_01_neg, mom_10_neg).sum())
 
 #%%
 # ## Problem: Count the frequency of negative returns
@@ -62,7 +87,8 @@ mom_05 = momentum["mom_05"]
 # What percent of returns are negative for each of the 10 momentum portfolios?
 
 #%%
-
+neg_returns = momentum < 0
+print(neg_returns.mean())
 
 #%%
 # ## Problem: Use `any` to find large losses
@@ -71,10 +97,10 @@ mom_05 = momentum["mom_05"]
 # greater than -5%.
 
 #%%
-
+print((momentum < -5).any())
 
 #%%
-
+print(np.any(momentum < -5, axis = 0))
 
 #%%
 
@@ -83,7 +109,7 @@ mom_05 = momentum["mom_05"]
 # Use `all` and negation to do the same check as `any`.
 
 #%%
-
+print(~((momentum > -5).all()))
 
 #%%
 # ## Exercises
